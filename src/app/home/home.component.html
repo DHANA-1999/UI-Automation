@@ -1,0 +1,15 @@
+<div class="content" style="font-size: 18px;">
+  <form [formGroup]="form"  (ngSubmit)="adduser()">            
+  <div class="form-group">
+     <div class="input">
+        <label class="sright" >StartDate</label>
+        <input  type="date" name="StartDate" formControlName="StartDate">
+     </div>
+     <div style="padding-top:20px;" class="input">
+        <label  class="right">EndDate</label>
+        <input  type="date" name="EndDate" formControlName="EndDate">
+     </div>
+  </div>
+  <button class="btn btn-primary" type="submit" style="padding-top:20px;" >Submit</button>
+  </form>
+</div>
