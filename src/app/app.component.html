@@ -1,1 +1,19 @@
-<router-outlet></router-outlet>
+<div class="content" style="font-size: 18px;padding-top:20px;">
+    <form [formGroup]="form_date"  (ngSubmit)="userdata()">            
+       <div class="input">
+          <label class="sright" >StartDate</label>
+          <input  type="date" id="StartDate" name="StartDate" formControlName="StartDate">
+       </div>
+       <div style="padding-top:20px;padding-bottom:20px;" class="input">
+          <label  class="right">EndDate</label>
+          <input  type="date" id="EndDate" name="EndDate" formControlName="EndDate">
+       </div>
+    <button class="btn btn-primary" type="submit" style="padding-top:5px;padding-left:20px;" >Submit</button>
+    </form>
+  </div>
+  <div *ngIf="findResult != '' ">
+     <br/>
+     <h2 style="padding: 0px;margin: 0px;border: 0px;">Data for given time intervals:</h2>
+     <br/>
+     <pre>{{findResult}}</pre>
+  </div>
