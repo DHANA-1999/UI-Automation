@@ -31,22 +31,20 @@ export class AppComponent  {
   }
 
   userdata() {
-    var start_date = this.form_date.value.StartDate.replace(/-/g, '')
-    var end_date = this.form_date.value.EndDate.replace(/-/g, '')
+    var start_date = this.form_date.value.StartDate.split('-').join("")
+    var end_date = this.form_date.value.EndDate.split('-').join("")
     
     console.log("working fine")
     console.log(this.form_date.value.StartDate)
     console.log(this.form_date.value.EndDate)
     console.log(start_date)
     console.log(end_date)
-    let inputBody = {"start_date": start_date,"end_date": end_date}
-    this.http.get('http://54.172.32.92:8000/filedata/'+start_date+'-'+end_date)
-      .subscribe(data => {
-        console.log(data)
-        console.log(typeof(data))
-        
-      
-      });
+      this.http
+      .get('http://3.95.245.165:8000/filedata/'+start_date+'-'+end_date)
+      .subscribe(
+        data => console.log('success', data),
+        error => console.log('oops', error)
+      ); 
     //window.location.href='http://54.172.32.92:8000/filedata/'+start_date+'-'+end_date;
     //this.document.location.href = 'https://stackoverflow.com';
     //return this.http.get<any>('http://54.172.32.92:8000/filedata/'+start_date+'-'+end_date);
