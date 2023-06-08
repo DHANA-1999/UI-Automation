@@ -1,55 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+
 import { Injectable, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
-  
+
+})
+@Injectable({
+  providedIn:'root'
 })
 export class AppComponent  {
   title = 'nlp-project';
   form_date: FormGroup = new FormGroup({});
-  findResult:any;
-  result:any;
- 
-  
- 
-  constructor(private router: Router,private http:HttpClient,) { }
+  tableData!: any;
+  load_data:boolean = true;
+  loading:boolean = true;
+  constructor(private router: Router,private http:HttpClient, ) { }
   ngOnInit(): void {
     this.form_date = new FormGroup({
       StartDate : new FormControl('', Validators.required),
       EndDate : new FormControl('', Validators.required),
     });
-    
+     this.load_data = false;
+     this.loading = true;
   }
 
   userdata() {
-    var start_date = this.form_date.value.StartDate.split('-').join("")
-    var end_date = this.form_date.value.EndDate.split('-').join("")
-    
+    //var start_date = this.form_date.value.StartDate.split('-').join("")
+    //var end_date = this.form_date.value.EndDate.split('-').join("")
+    var start_date=this.form_date.value.StartDate
+    var end_date=this.form_date.value.EndDate
     console.log("working fine")
-    console.log(this.form_date.value.StartDate)
-    console.log(this.form_date.value.EndDate)
     console.log(start_date)
     console.log(end_date)
-      this.http
-      .get('http://3.95.245.165:8000/filedata/'+start_date+'-'+end_date)
-      .subscribe(
-        data => console.log('success', data),
-        error => console.log('oops', error)
-      ); 
-    //window.location.href='http://54.172.32.92:8000/filedata/'+start_date+'-'+end_date;
-    //this.document.location.href = 'https://stackoverflow.com';
-    //return this.http.get<any>('http://54.172.32.92:8000/filedata/'+start_date+'-'+end_date);
 
+    this.http.get('http://54.165.122.233:8000/filedata/'+start_date+'&'+end_date)
+      .subscribe(data => {
+        if (Response) {
+          hideloader();
+      }
+        console.log(data)
+        this.tableData = data
+        this.load_data = true;
+
+      });
+
+      function hideloader() {
+        // Setting display of spinner
+        // element to none
+        document.getElementById('loading')!
+            .style.display = 'none';
+    }
   }
-
-
 }
