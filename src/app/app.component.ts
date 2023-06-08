@@ -18,19 +18,20 @@ export class AppComponent  {
   title = 'nlp-project';
   form_date: FormGroup = new FormGroup({});
   tableData!: any;
-  load_data:boolean = true;
-  loading:boolean = true;
+  load_data:boolean = false;
+  loading:boolean = false;
   constructor(private router: Router,private http:HttpClient, ) { }
   ngOnInit(): void {
     this.form_date = new FormGroup({
       StartDate : new FormControl('', Validators.required),
       EndDate : new FormControl('', Validators.required),
     });
-     this.load_data = false;
-     this.loading = true;
+
+
   }
 
   userdata() {
+    this.loading = true;
     //var start_date = this.form_date.value.StartDate.split('-').join("")
     //var end_date = this.form_date.value.EndDate.split('-').join("")
     var start_date=this.form_date.value.StartDate
@@ -39,13 +40,14 @@ export class AppComponent  {
     console.log(start_date)
     console.log(end_date)
 
-    this.http.get('http://54.165.122.233:8000/filedata/'+start_date+'&'+end_date)
+    this.http.get('http://18.212.164.34:8000/filedata/'+start_date+'&'+end_date)
       .subscribe(data => {
         if (Response) {
           hideloader();
       }
         console.log(data)
-        this.tableData = data
+        this.tableData = data;
+        this.loading = false;
         this.load_data = true;
 
       });
